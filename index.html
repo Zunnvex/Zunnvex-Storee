@@ -7,88 +7,110 @@
 <title>Zunnvex Store</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-    }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
 
-    body {
-        background: #0b0b0f;
-        color: white;
-        padding: 20px;
-    }
+body {
+    background: #0b0b0f;
+    color: white;
+    padding: 20px;
+}
 
-    .container {
-        max-width: 600px;
-        margin: auto;
-    }
+.container {
+    max-width: 600px;
+    margin: auto;
+}
 
-    .header {
-        background: linear-gradient(135deg, #171722, #101016);
-        border: 1px solid #292936;
-        border-radius: 20px;
-        padding: 25px 20px;
-        text-align: center;
-        margin-bottom: 25px;
-    }
+.header {
+    background: #15151d;
+    border: 1px solid #292936;
+    border-radius: 20px;
+    padding: 25px 20px;
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-    .header h1 {
-        font-size: 28px;
-        margin-bottom: 8px;
-    }
+.header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
 
-    .header p {
-        color: #aaa;
-        font-size: 14px;
-    }
+.header p {
+    color: #aaa;
+}
 
-    .section-title {
-        font-size: 20px;
-        margin-bottom: 15px;
-    }
+.section-title {
+    margin-bottom: 15px;
+}
 
-    .product {
-        background: #15151d;
-        border: 1px solid #292936;
-        border-radius: 16px;
-        padding: 18px;
-        margin-bottom: 15px;
-    }
+.product {
+    background: #15151d;
+    border: 1px solid #292936;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 15px;
+}
 
-    .product h3 {
-        font-size: 18px;
-        margin-bottom: 8px;
-    }
+.product h3 {
+    margin-bottom: 8px;
+}
 
-    .product p {
-        color: #aaa;
-        margin-bottom: 14px;
-        font-size: 14px;
-    }
+.product p {
+    color: #aaa;
+    margin-bottom: 15px;
+}
 
-    .buy {
-        display: block;
-        text-align: center;
-        text-decoration: none;
-        background: white;
-        color: black;
-        padding: 11px;
-        border-radius: 10px;
-        font-weight: bold;
-    }
+.buy {
+    width: 100%;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    background: white;
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+}
 
-    .buy:active {
-        transform: scale(0.98);
-    }
+.form-box {
+    display: none;
+    background: #15151d;
+    border: 1px solid #292936;
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 20px;
+}
 
-    .footer {
-        text-align: center;
-        color: #666;
-        font-size: 12px;
-        margin-top: 30px;
-    }
+input, select {
+    width: 100%;
+    padding: 13px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #33333f;
+    background: #0b0b0f;
+    color: white;
+}
+
+.submit {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: white;
+    color: black;
+    font-weight: bold;
+}
+
+.footer {
+    text-align: center;
+    color: #666;
+    font-size: 12px;
+    margin-top: 30px;
+}
 </style>
 </head>
 
@@ -106,25 +128,58 @@
     <div class="product">
         <h3>🎮 Mobile Legends</h3>
         <p>Diamond Mobile Legends</p>
-        <a href="#" class="buy">BELI SEKARANG</a>
+        <button class="buy" onclick="openForm('Mobile Legends')">
+            BELI SEKARANG
+        </button>
     </div>
 
     <div class="product">
         <h3>🔥 Free Fire</h3>
         <p>Diamond Free Fire</p>
-        <a href="#" class="buy">BELI SEKARANG</a>
+        <button class="buy" onclick="openForm('Free Fire')">
+            BELI SEKARANG
+        </button>
     </div>
 
     <div class="product">
         <h3>🔫 PUBG Mobile</h3>
         <p>UC PUBG Mobile</p>
-        <a href="#" class="buy">BELI SEKARANG</a>
+        <button class="buy" onclick="openForm('PUBG Mobile')">
+            BELI SEKARANG
+        </button>
     </div>
 
     <div class="product">
         <h3>🟩 Roblox</h3>
         <p>Robux Roblox</p>
-        <a href="#" class="buy">BELI SEKARANG</a>
+        <button class="buy" onclick="openForm('Roblox')">
+            BELI SEKARANG
+        </button>
+    </div>
+
+    <div class="form-box" id="orderForm">
+
+        <h2>🧾 Detail Order</h2>
+        <br>
+
+        <label>Game</label>
+        <input type="text" id="game" readonly>
+
+        <label>ID / UID</label>
+        <input type="text" id="uid" placeholder="Masukkan ID game">
+
+        <label>Pilih Nominal</label>
+        <select id="nominal">
+            <option>86 Diamonds</option>
+            <option>172 Diamonds</option>
+            <option>257 Diamonds</option>
+            <option>344 Diamonds</option>
+        </select>
+
+        <button class="submit" onclick="submitOrder()">
+            LANJUTKAN
+        </button>
+
     </div>
 
     <div class="footer">
@@ -133,5 +188,37 @@
 
 </div>
 
+<script>
+
+function openForm(game) {
+    document.getElementById("orderForm").style.display = "block";
+    document.getElementById("game").value = game;
+
+    document.getElementById("orderForm").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+function submitOrder() {
+
+    const game = document.getElementById("game").value;
+    const uid = document.getElementById("uid").value;
+    const nominal = document.getElementById("nominal").value;
+
+    if (uid === "") {
+        alert("Masukkan ID game terlebih dahulu!");
+        return;
+    }
+
+    alert(
+        "Order berhasil dibuat!\n\n" +
+        "Game: " + game +
+        "\nUID: " + uid +
+        "\nNominal: " + nominal
+    );
+}
+
+</script>
+
 </body>
-  </html>
+</html>
