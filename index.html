@@ -35,7 +35,6 @@ body {
 }
 
 .header h1 {
-    font-size: 28px;
     margin-bottom: 8px;
 }
 
@@ -75,7 +74,8 @@ body {
     font-size: 15px;
 }
 
-.form-box {
+.form-box,
+.invoice {
     display: none;
     background: #15151d;
     border: 1px solid #292936;
@@ -84,7 +84,8 @@ body {
     margin-top: 20px;
 }
 
-input, select {
+input,
+select {
     width: 100%;
     padding: 13px;
     margin-top: 8px;
@@ -95,7 +96,8 @@ input, select {
     color: white;
 }
 
-.submit {
+.submit,
+.pay {
     width: 100%;
     padding: 13px;
     border: none;
@@ -103,6 +105,24 @@ input, select {
     background: white;
     color: black;
     font-weight: bold;
+}
+
+.invoice p {
+    margin: 10px 0;
+    color: #ccc;
+}
+
+.status {
+    margin: 15px 0;
+    padding: 12px;
+    border-radius: 10px;
+    background: #292936;
+    text-align: center;
+}
+
+.success {
+    background: #123d24;
+    color: #7dffa8;
 }
 
 .footer {
@@ -157,9 +177,13 @@ input, select {
         </button>
     </div>
 
+
+    <!-- FORM ORDER -->
+
     <div class="form-box" id="orderForm">
 
         <h2>🧾 Detail Order</h2>
+
         <br>
 
         <label>Game</label>
@@ -169,18 +193,49 @@ input, select {
         <input type="text" id="uid" placeholder="Masukkan ID game">
 
         <label>Pilih Nominal</label>
+
         <select id="nominal">
-            <option>86 Diamonds</option>
-            <option>172 Diamonds</option>
-            <option>257 Diamonds</option>
-            <option>344 Diamonds</option>
+            <option value="15000">86 Diamonds - Rp15.000</option>
+            <option value="29000">172 Diamonds - Rp29.000</option>
+            <option value="43000">257 Diamonds - Rp43.000</option>
+            <option value="57000">344 Diamonds - Rp57.000</option>
         </select>
 
-        <button class="submit" onclick="submitOrder()">
+        <button class="submit" onclick="createInvoice()">
             LANJUTKAN
         </button>
 
     </div>
+
+
+    <!-- INVOICE -->
+
+    <div class="invoice" id="invoice">
+
+        <h2>🧾 Invoice</h2>
+
+        <br>
+
+        <p><b>Order ID:</b> <span id="orderId"></span></p>
+
+        <p><b>Game:</b> <span id="invoiceGame"></span></p>
+
+        <p><b>UID:</b> <span id="invoiceUid"></span></p>
+
+        <p><b>Nominal:</b> <span id="invoiceNominal"></span></p>
+
+        <p><b>Total:</b> Rp<span id="invoicePrice"></span></p>
+
+        <div class="status" id="paymentStatus">
+            ⏳ Menunggu pembayaran
+        </div>
+
+        <button class="pay" id="payButton" onclick="simulatePayment()">
+            💳 BAYAR SEKARANG
+        </button>
+
+    </div>
+
 
     <div class="footer">
         © 2026 Zunnvex Store
@@ -188,37 +243,118 @@ input, select {
 
 </div>
 
+
 <script>
 
 function openForm(game) {
+
     document.getElementById("orderForm").style.display = "block";
+
     document.getElementById("game").value = game;
+
+    document.getElementById("invoice").style.display = "none";
 
     document.getElementById("orderForm").scrollIntoView({
         behavior: "smooth"
     });
 }
 
-function submitOrder() {
 
-    const game = document.getElementById("game").value;
-    const uid = document.getElementById("uid").value;
-    const nominal = document.getElementById("nominal").value;
+function createInvoice() {
+
+    const game =
+        document.getElementById("game").value;
+
+    const uid =
+        document.getElementById("uid").value;
+
+    const nominal =
+        document.getElementById("nominal");
+
+    const price =
+        nominal.value;
+
+    const nominalText =
+        nominal.options[nominal.selectedIndex].text;
+
 
     if (uid === "") {
+
         alert("Masukkan ID game terlebih dahulu!");
+
         return;
     }
 
-    alert(
-        "Order berhasil dibuat!\n\n" +
-        "Game: " + game +
-        "\nUID: " + uid +
-        "\nNominal: " + nominal
+
+    const orderId =
+        "ZV" + Date.now();
+
+
+    document.getElementById("orderId").textContent =
+        orderId;
+
+    document.getElementById("invoiceGame").textContent =
+        game;
+
+    document.getElementById("invoiceUid").textContent =
+        uid;
+
+    document.getElementById("invoiceNominal").textContent =
+        nominalText;
+
+    document.getElementById("invoicePrice").textContent =
+        Number(price).toLocaleString("id-ID");
+
+
+    document.getElementById("invoice").style.display =
+        "block";
+
+    document.getElementById("paymentStatus").textContent =
+        "⏳ Menunggu pembayaran";
+
+    document.getElementById("paymentStatus").classList.remove(
+        "success"
     );
+
+    document.getElementById("payButton").style.display =
+        "block";
+
+
+    document.getElementById("invoice").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+
+function simulatePayment() {
+
+    const status =
+        document.getElementById("paymentStatus");
+
+    const button =
+        document.getElementById("payButton");
+
+
+    status.textContent =
+        "⏳ Memproses pembayaran...";
+
+    button.disabled = true;
+
+
+    setTimeout(function() {
+
+        status.textContent =
+            "✅ Pembayaran berhasil!";
+
+        status.classList.add("success");
+
+        button.style.display =
+            "none";
+
+    }, 2000);
 }
 
 </script>
 
 </body>
-</html>
+    </html>
